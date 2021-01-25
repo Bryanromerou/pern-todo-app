@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const pool = require("../db");
 
+
+//Index Route
 router.get("/", async(req,res)=>{
   try {
     const allTodos = await pool.query("SELECT * FROM todo");//The reason why we didn't need "RETURNING *" is because naturaly SELECT return stuff
@@ -11,6 +13,15 @@ router.get("/", async(req,res)=>{
   }
 });
 
+router.get("/:todoId",async(req,res)=>{
+  try {
+    console.log(req.params)    
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+//Create Route
 router.post("/", async(req,res)=>{
   try {
     const { description } = req.body;
