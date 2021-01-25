@@ -12,7 +12,7 @@ const index = async(req,res)=>{
   }
 }
 
-//Show Route (NOT FINISHED)
+//Show Route 
 const show = async(req,res)=>{
   try {
     const {id} = req.params;
@@ -46,4 +46,15 @@ const update = async(req,res)=>{
   }
 }
 
-module.exports = {index, show, create,update};
+// Delete Route
+const destroy = async(req,res)=>{
+  try {
+    const {id} = req.params;
+    const deletedTodo = await pool.query("DELETE FROM todo WHERE todo_id = $1 RETURNING *",[id])
+    res.json({deleted_data : deletedTodo.rows[0]});
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+module.exports = {index, show, create,update, destroy};
