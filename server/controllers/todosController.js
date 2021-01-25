@@ -2,27 +2,27 @@ const express = require('express');
 const router = express.Router();
 const pool = require("../db");
 
-
 //Index Route
-router.get("/", async(req,res)=>{
+const index = async(req,res)=>{
   try {
     const allTodos = await pool.query("SELECT * FROM todo");//The reason why we didn't need "RETURNING *" is because naturaly SELECT return stuff
     res.json(allTodos.rows); 
   } catch (error) {
     console.error(error.message);
   }
-});
+}
 
-router.get("/:todoId",async(req,res)=>{
+//Show Route (NOT FINISHED)
+const show = async(req,res)=>{
   try {
     console.log(req.params)    
   } catch (error) {
     console.error(error.message);
   }
-});
+}
 
 //Create Route
-router.post("/", async(req,res)=>{
+const create = async(req,res)=>{
   try {
     const { description } = req.body;
     const newTodo = await pool.query("INSERT INTO todo (description) VALUES ($1) RETURNING *",[description])//"RETURNING *" is necessary because otherwise the return will not contain the actual request
@@ -30,7 +30,7 @@ router.post("/", async(req,res)=>{
   } catch (error) {
     console.error(error.message);
   }
-});
+}
 
 
-module.exports = router;
+module.exports = {index, show, create};

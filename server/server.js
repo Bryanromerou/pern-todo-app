@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+//Routes
+const routes = require("./routes");
 
 //DOTENV
 require('dotenv').config();
@@ -21,7 +23,7 @@ app.use((req, res, next) => {
   next(); // Allow the request to move on to the next middleware in the chain
 });
 
-app.use("/todos",ctrl.todos)
+app.use("/todos",routes.todos)
 
 
 app.listen(PORT, ()=>{
