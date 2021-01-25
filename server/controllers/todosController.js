@@ -15,7 +15,9 @@ const index = async(req,res)=>{
 //Show Route (NOT FINISHED)
 const show = async(req,res)=>{
   try {
-    console.log(req.params)    
+    const {id} = req.params;
+    const todo = await pool.query("SELECT * FROM todo WHERE todo_id = $1",[id])
+    res.json(todo.rows[0]);
   } catch (error) {
     console.error(error.message);
   }
@@ -32,5 +34,16 @@ const create = async(req,res)=>{
   }
 }
 
+// Update Route
+const update = async(req,res)=>{
+  try {
+    const {id} = req.params;
+    const {description} = req.body;
+    const updatedTodo = await pool.query("UPDATE todo SET description = $1 WHERE todo_id = $2 RETURNING *",[description,id])
+    res.json(updatedTodo.rows[0]);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 
-module.exports = {index, show, create};
+module.exports = {index, show, create,update};

@@ -6,6 +6,7 @@ const ctrl = require("../controllers");
 router.get("/", ctrl.todos.index);
 router.get("/:id", ctrl.todos.show);
 router.post("/", ctrl.todos.create);
+router.put("/:id", ctrl.todos.update);
 
 
 // exports

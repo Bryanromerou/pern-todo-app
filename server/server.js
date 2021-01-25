@@ -9,9 +9,6 @@ require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 const pool = require("./db");
 
-// Controllers
-const ctrl = require('./controllers');
-
 //Middleware
 app.use(cors());
 app.use(express.json()); // => allows us to access req.body
